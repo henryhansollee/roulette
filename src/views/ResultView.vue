@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+.main-template {
+  background-color: #67D5B5;
+  margin-top: 15.5%;
+}
 </style>
