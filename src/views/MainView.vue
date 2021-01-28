@@ -11,7 +11,7 @@
       <h1 class="main-title">싸피룰렛</h1>
       <div>
         <router-link to="/result">
-          <button class="main-button btn btn-dark mr-1">시작하기</button>
+          <button class="main-button btn btn-dark mr-1" disabled>시작하기</button>
         </router-link>
         <a href="https://frosty-einstein-bf8978.netlify.app/" class="main-button btn btn-warning">싸피솔덤</a>
       </div>
