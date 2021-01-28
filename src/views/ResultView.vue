@@ -1,25 +1,28 @@
 <template>
   <div class="result-template">
-    <div class="columns is-centered">
-      <input type="button" class="button is-dark" value="SPIN ROULETTE" id='spin' v-on:click="spin"/>  
-    </div>
-    <div class="columns is-centered">
-      <canvas id="canvas" width="500" height="500"></canvas>
-    </div>
-    <div class="columns is-multiline">
-      <div class="column is-half">
-        <div class="field">
-          <input class="input" type="text" placeholder="Input More Prize" v-model="new_option" v-on:keyup.enter="addOptions">
+    <div class="d-flex">
+      <div class="canvas-box d-flex justify-content-center">
+        <div>
+          <canvas id="canvas" width="500" height="500" />
+          <button class="btn btn-primary result-font1" v-on:click="spin">돌려버려</button>
         </div>
       </div>
-      <div class="column is-half">
-        <button class="button is-primary" v-on:click="addOptions">Add Prize</button>
-      </div>
-      <div class="column is-one-quarter" v-for="option in options" :key="option">
+      <div class="d-flex flex-column">
+        <div class="input-group input-group">
+          <input class="form-control result-font1" type="text" placeholder="항목을 입력하세요 :)" v-model="new_option" v-on:keyup.enter="addOptions">
+          <button class="btn btn-dark result-font1" v-on:click="addOptions">항목추가</button>
+        </div>
+        <div class="column is-one-quarter" v-for="option in options" :key="option">
         <button class="button is-danger" v-on:click="removeOptions(option)">x</button>
         <span> {{option}} </span>
+        </div>
       </div>
     </div>
+
+     
+    
+    
+
   </div>
 </template>
 
@@ -28,9 +31,8 @@ export default {
   name: 'ResultView',
   data() {
     return {
-      options: ['Try Again'],
+      options: ['초기'],
       new_option: '',
-
       startAngle: 0,
       startAngleStart: 0,
       spinTimeout: null,
@@ -40,23 +42,19 @@ export default {
       ctx: ''
     } 
   },
-
   computed:{
     arc: function () {
       return Math.PI / (this.options.length / 2);
     } 
   },
-
   methods: {
     byte2Hex: function (n) {
       var nybHexString = "0123456789ABCDEF";
       return String(nybHexString.substr((n >> 4) & 0x0F,1)) + nybHexString.substr(n & 0x0F,1);
     },
-
     RGB2Color: function (r,g,b) {
       return '#' + this.byte2Hex(r) + this.byte2Hex(g) + this.byte2Hex(b);
     },
-
     getColor: function (item, maxitem) {
       var phase = 0;
       var center = 128;
@@ -186,8 +184,25 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: 'SDSamliphopangche_Outline';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'CookieRunOTF-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Bold00.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 .result-template {
   background-color: #67D5B5;
-  margin-top: 15.5%;
+}
+.canvas-box {
+  background-color: #67D5B5;
+}
+.result-font1 {
+  font-family: 'CookieRunOTF-Bold';
 }
 </style>
