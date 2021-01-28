@@ -1,10 +1,9 @@
 <template>
-  <div class="result-template">
+  <div class="result-template d-flex flex-column align-items-center">
     <div class="d-flex">
-      <div class="canvas-box d-flex justify-content-center">
+      <div class="d-flex justify-content-center">
         <div>
-          <canvas id="canvas" width="500" height="500" />
-          <button class="btn btn-primary result-font1" v-on:click="spin">돌려버려</button>
+          <canvas class="canvas-tag" id="canvas" width="460" height="460" />
         </div>
       </div>
       <div class="d-flex flex-column">
@@ -13,11 +12,18 @@
           <button class="btn btn-dark result-font1" v-on:click="addOptions">항목추가</button>
         </div>
         <div class="column is-one-quarter" v-for="option in options" :key="option">
-        <button class="button is-danger" v-on:click="removeOptions(option)">x</button>
-        <span> {{option}} </span>
+        
+        <b-list-group>
+          <b-list-group-item class="d-flex justify-content-between result-list-group">
+            <small class="result-font1">{{option}}</small>
+            <button class="btn btn-danger result-font1 delete-button" v-on:click="removeOptions(option)">x</button>
+          </b-list-group-item>
+        </b-list-group>
         </div>
       </div>
     </div>
+
+    <button class="btn btn-primary result-font1" v-on:click="spin">돌려버려</button>
 
      
     
@@ -31,7 +37,7 @@ export default {
   name: 'ResultView',
   data() {
     return {
-      options: ['초기'],
+      options: [],
       new_option: '',
       startAngle: 0,
       startAngleStart: 0,
@@ -89,6 +95,7 @@ export default {
         this.ctx = canvas.getContext("2d");
         this.ctx.clearRect(0,0,500,500);
 
+        // 돌림판 테두리
         this.ctx.strokeStyle = "black";
         this.ctx.lineWidth = 2;
 
@@ -137,7 +144,7 @@ export default {
     spin: function () {
       this.spinAngleStart = Math.random() * 10 + 10;
       this.spinTime = 0;
-      this.spinTimeTotal = Math.random() * 3 + 4 * 1000;
+      this.spinTimeTotal = Math.random() * 3 + 4 * 2500;
       this.rotateWheel();
     },
 
@@ -198,11 +205,18 @@ export default {
 }
 .result-template {
   background-color: #67D5B5;
-}
-.canvas-box {
-  background-color: #67D5B5;
+  margin-top: 7%;
 }
 .result-font1 {
   font-family: 'CookieRunOTF-Bold';
+}
+.result-list-group {
+  font-size: 30px;
+}
+.delete-button {
+  width: 15%;
+}
+.canvas-tag {
+  margin-right: 190px;
 }
 </style>
