@@ -11,24 +11,32 @@
           <input class="form-control result-font1" type="text" placeholder="항목을 입력하세요 :)" v-model="new_option" v-on:keyup.enter="addOptions">
           <button class="btn btn-dark result-font1" v-on:click="addOptions">항목추가</button>
         </div>
-        <div class="column is-one-quarter" v-for="option in options" :key="option">
-        
-        <b-list-group>
-          <b-list-group-item class="d-flex justify-content-between result-list-group">
-            <small class="result-font1">{{option}}</small>
-            <button class="btn btn-danger result-font1 delete-button" v-on:click="removeOptions(option)">x</button>
-          </b-list-group-item>
-        </b-list-group>
-        </div>
+        <b-card>
+          <b-card-body
+            class="p-0"
+            id="nav-scroller"
+            ref="content"
+            style="position:relative; height:350px; overflow-y:scroll;"
+          >
+            <div class="column is-one-quarter" v-for="option in options" :key="option">
+              <b-list-group>
+                <b-list-group-item class="d-flex justify-content-between result-list-group">
+                  <small class="result-font1">{{option}}</small>
+                  <button class="btn btn-danger result-font1 delete-button" v-on:click="removeOptions(option)">x</button>
+                </b-list-group-item>
+              </b-list-group>
+            </div>
+          </b-card-body>
+        </b-card>
       </div>
     </div>
 
+    
+
+
+    
+    
     <button class="btn btn-primary result-font1" v-on:click="spin">돌려버려</button>
-
-     
-    
-    
-
   </div>
 </template>
 
@@ -144,7 +152,7 @@ export default {
     spin: function () {
       this.spinAngleStart = Math.random() * 10 + 10;
       this.spinTime = 0;
-      this.spinTimeTotal = Math.random() * 3 + 4 * 2500;
+      this.spinTimeTotal = Math.random() * 3 + 4 * 2000;
       this.rotateWheel();
     },
 
@@ -170,7 +178,7 @@ export default {
       var arcd = this.arc * 180 / Math.PI;
       var index = Math.floor((360 - degrees % 360) / arcd);
       this.ctx.save();
-      this.ctx.font = 'bold 30px Helvetica, Arial';
+      this.ctx.font = 'SDSamliphopangche_Outline';
       var text = this.options[index]
       console.log(index, text, this.options)
       this.ctx.fillText(text, 250 - this.ctx.measureText(text).width / 2, 250 + 10);
@@ -204,8 +212,10 @@ export default {
   font-style: normal;
 }
 .result-template {
-  background-color: #67D5B5;
-  margin-top: 7%;
+  background-color: #FFFFF2;
+  margin-top: 4%;
+  padding-top: 3%;
+  padding-bottom: 3%;
 }
 .result-font1 {
   font-family: 'CookieRunOTF-Bold';
