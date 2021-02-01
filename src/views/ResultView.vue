@@ -9,7 +9,7 @@
       <div class="d-flex flex-column">
         <div class="input-group input-group">
           <input class="form-control result-font1" type="text" placeholder="항목을 입력하세요 :)" v-model="new_option" v-on:keyup.enter="addOptions">
-          <button class="btn btn-dark result-font1" v-on:click="addOptions">항목추가</button>
+          <button class="btn btn-secondary result-font1" v-on:click="addOptions">항목추가</button>
         </div>
         <b-card>
           <b-card-body
@@ -21,22 +21,19 @@
             <div class="column is-one-quarter" v-for="option in options" :key="option">
               <b-list-group>
                 <b-list-group-item class="d-flex justify-content-between result-list-group">
-                  <small class="result-font1">{{option}}</small>
-                  <button class="btn btn-danger result-font1 delete-button" v-on:click="removeOptions(option)">x</button>
+                  <small class="result-font1 option-text">{{option}}</small>
+                  <button class="btn btn-danger btn-sm result-font1 delete-button" v-on:click="removeOptions(option)">x</button>
                 </b-list-group-item>
               </b-list-group>
             </div>
           </b-card-body>
         </b-card>
+        <div class="d-flex">
+          <button class="btn btn-dark result-font1 w-100" v-on:click="spin">돌려버려</button>
+          <a class="btn btn-light result-font1 w-100" href="/">처음으로</a>
+        </div>
       </div>
     </div>
-
-    
-
-
-    
-    
-    <button class="btn btn-primary result-font1" v-on:click="spin">돌려버려</button>
   </div>
 </template>
 
@@ -45,7 +42,7 @@ export default {
   name: 'ResultView',
   data() {
     return {
-      options: [],
+      options: ['꽝☆', '당첨★'],
       new_option: '',
       startAngle: 0,
       startAngleStart: 0,
@@ -71,8 +68,8 @@ export default {
     },
     getColor: function (item, maxitem) {
       var phase = 0;
-      var center = 128;
-      var width = 127;
+      var center =120;
+      var width = 120;
       var frequency = Math.PI*2/maxitem;
       
       var red   = Math.sin(frequency*item+2+phase) * width + center;
@@ -104,10 +101,10 @@ export default {
         this.ctx.clearRect(0,0,500,500);
 
         // 돌림판 테두리
-        this.ctx.strokeStyle = "black";
-        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = "lightgray";
+        this.ctx.lineWidth = 3;
 
-        this.ctx.font = 'bold 12px Helvetica, Arial';
+        this.ctx.font = '15px CookieRunOTF-Bold';
 
         for(var i = 0; i < this.options.length; i++) {
           var angle = this.startAngle + i * this.arc;
@@ -150,7 +147,7 @@ export default {
     },
 
     spin: function () {
-      this.spinAngleStart = Math.random() * 10 + 10;
+      this.spinAngleStart = Math.random() * 50 + 50;
       this.spinTime = 0;
       this.spinTimeTotal = Math.random() * 3 + 4 * 2000;
       this.rotateWheel();
@@ -178,7 +175,7 @@ export default {
       var arcd = this.arc * 180 / Math.PI;
       var index = Math.floor((360 - degrees % 360) / arcd);
       this.ctx.save();
-      this.ctx.font = 'SDSamliphopangche_Outline';
+      this.ctx.font = '50px SDSamliphopangche_Outline';
       var text = this.options[index]
       console.log(index, text, this.options)
       this.ctx.fillText(text, 250 - this.ctx.measureText(text).width / 2, 250 + 10);
@@ -228,5 +225,8 @@ export default {
 }
 .canvas-tag {
   margin-right: 190px;
+}
+.option-text {
+  font-size: 1rem;
 }
 </style>
