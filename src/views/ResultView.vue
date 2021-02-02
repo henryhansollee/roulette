@@ -29,8 +29,9 @@
           </b-card-body>
         </b-card>
         <div class="d-flex">
-          <button class="btn btn-dark result-font1 w-100" v-on:click="spin">돌려버려</button>
-          <a class="btn btn-light result-font1 w-100" href="/">처음으로</a>
+          <button class="btn btn-primary result-font1 w-100 ml-1" v-on:click="spin">돌려버려</button>
+          <button class="btn btn-info result-font1 w-100" @click="initRoulette">다시하기</button>
+          <a class="btn btn-warning result-font1 w-100 mr-1 go-main" href="/">처음으로</a>
         </div>
       </div>
     </div>
@@ -38,11 +39,18 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import VueConfetti from 'vue-confetti'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+Vue.use(VueConfetti)
+
 export default {
   name: 'ResultView',
   data() {
     return {
-      options: ['꽝☆', '당첨★'],
+      options: ['꽝★', '당첨♣', '다시♥'],
       new_option: '',
       startAngle: 0,
       startAngleStart: 0,
@@ -59,6 +67,50 @@ export default {
     } 
   },
   methods: {
+    initRoulette() {
+      this.$router.go()
+    },
+    start() {
+        this.$confetti.start({
+        particles: [
+          {
+            type: 'heart',
+            dropRate: '5',
+            size: '7'
+          },
+          {
+            type: 'circle',
+            dropRate: '5',
+            size: '7'
+          },
+        ],
+        defaultColors: [
+          'red',
+          'pink',
+          'yellow',
+          // '#ba0000'
+        ],
+        
+      })
+    },
+    stop() {
+      this.$confetti.stop();
+    },
+    love() {
+      this.$confetti.update({
+        particles: [
+          {
+            type: 'heart',
+          },
+        ],
+        defaultColors: [
+          'red',
+          'pink',
+          '#ba0000'
+        ],
+        dropRate: 1
+      });
+    },
     byte2Hex: function (n) {
       var nybHexString = "0123456789ABCDEF";
       return String(nybHexString.substr((n >> 4) & 0x0F,1)) + nybHexString.substr(n & 0x0F,1);
@@ -68,8 +120,8 @@ export default {
     },
     getColor: function (item, maxitem) {
       var phase = 0;
-      var center =120;
-      var width = 120;
+      var center =500;
+      var width = 100;
       var frequency = Math.PI*2/maxitem;
       
       var red   = Math.sin(frequency*item+2+phase) * width + center;
@@ -104,7 +156,7 @@ export default {
         this.ctx.strokeStyle = "lightgray";
         this.ctx.lineWidth = 3;
 
-        this.ctx.font = '15px CookieRunOTF-Bold';
+        this.ctx.font = '100% CookieRunOTF-Bold';
 
         for(var i = 0; i < this.options.length; i++) {
           var angle = this.startAngle + i * this.arc;
@@ -151,6 +203,9 @@ export default {
       this.spinTime = 0;
       this.spinTimeTotal = Math.random() * 3 + 4 * 2000;
       this.rotateWheel();
+      setTimeout(
+        this.start, 8400
+      )
     },
 
     rotateWheel: function () {
@@ -175,7 +230,7 @@ export default {
       var arcd = this.arc * 180 / Math.PI;
       var index = Math.floor((360 - degrees % 360) / arcd);
       this.ctx.save();
-      this.ctx.font = '50px SDSamliphopangche_Outline';
+      this.ctx.font = '40px SDSamliphopangche_Outline';
       var text = this.options[index]
       console.log(index, text, this.options)
       this.ctx.fillText(text, 250 - this.ctx.measureText(text).width / 2, 250 + 10);
@@ -209,7 +264,7 @@ export default {
   font-style: normal;
 }
 .result-template {
-  background-color: #FFFFF2;
+  background-color: #FFFFF3;
   margin-top: 4%;
   padding-top: 3%;
   padding-bottom: 3%;
@@ -228,5 +283,8 @@ export default {
 }
 .option-text {
   font-size: 1rem;
+}
+.go-main {
+  color: white;
 }
 </style>
