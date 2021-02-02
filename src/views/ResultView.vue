@@ -30,7 +30,7 @@
         </b-card>
         <div class="d-flex">
           <button class="btn btn-primary result-font1 w-100 ml-1" v-on:click="spin">돌려버려</button>
-          <a class="btn btn-info result-font1 w-100" href="/result">다시하기</a>
+          <button class="btn btn-info result-font1 w-100" @click="initRoulette">다시하기</button>
           <a class="btn btn-warning result-font1 w-100 mr-1 go-main" href="/">처음으로</a>
         </div>
       </div>
@@ -67,9 +67,6 @@ export default {
     } 
   },
   methods: {
-    initRoulette() {
-      this.$router.go()
-    },
     start() {
         this.$confetti.start({
         particles: [
@@ -241,7 +238,12 @@ export default {
       var ts = (t/=d)*t;
       var tc = ts*t;
       return b+c*(tc + -3*ts + 3*t);
-    }
+    },
+  initRoulette() {
+      this.options = ['꽝★', '당첨♣', '다시♥']
+      this.$confetti.stop();
+      this.drawRouletteWheel()
+    },
   },
 
   mounted() {
