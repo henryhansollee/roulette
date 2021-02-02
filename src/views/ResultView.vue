@@ -30,7 +30,7 @@
         </b-card>
         <div class="d-flex">
           <button class="btn btn-primary result-font1 w-100 ml-1" v-on:click="spin">돌려버려</button>
-          <button class="btn btn-info result-font1 w-100" @click="initRoulette">다시하기</button>
+          <a class="btn btn-info result-font1 w-100" href="/result">다시하기</a>
           <a class="btn btn-warning result-font1 w-100 mr-1 go-main" href="/">처음으로</a>
         </div>
       </div>
